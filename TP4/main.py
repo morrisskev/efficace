@@ -149,6 +149,7 @@ def assign_drone(index):
     order_item_index = order_items[best_order_index].pop(0)
     order_quantity[best_order_index] -= 1
     best_warehouse_index = best_warehouse_for_product(index, order_item_index)
+    warhouse_products[best_warehouse_index][order_item_index] -= 1
     distance = distance_drone_warehouse(index, best_warehouse_index)
     if distance > 0:
         move_drone(index, warehouse_coords[best_warehouse_index]
@@ -183,7 +184,7 @@ def solve():
     game_over()
 
 
-with open("example.in") as f:
+with open("busy_day.in") as f:
     lines = f.readlines()
     # Format : First line : rows, columns, drones, turns, max payload
     rows, columns, drones, turns, max_payload = [
