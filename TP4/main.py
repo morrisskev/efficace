@@ -128,17 +128,46 @@ def best_warehouse_for_product(drone_index, product_index):
     return best_warehouse_index
 
 
-def best_order(drone_index):
-    if len(priority_orders) == 0:
-        # Absolutely need to reduce quantity when fullfilled order
-        for i in range(0, len(order_quantity)):
-            if order_quantity[i] > 0:
-                return i
+def order_weight(order_index):
+    order_products = order_items[order_index]
+    weight = 0
+    for product in order_products:
+        weight += product_weights[product]
+    return weight
 
+
+def best_order(drone_index):
+    # v1 : Get the order with the min distance to drone
+
+    # best_order_index = -1
+    # best_order_distance = 1000000
+    # for i in range(0, len(order_coords)):
+    #     if order_quantity[i] > 0:
+    #         order_distance = distance(
+    #             drone_coords[drone_index][0], drone_coords[drone_index][1], order_coords[i][0], order_coords[i][1])
+    #         if(order_distance < best_order_distance):
+    #             best_order_index = i
+    #             best_order_distance = order_distance
+    # if best_order_index == -1:
+    #     print("No more orders !!")
+    #     game_over()
+    # return best_order_index
+
+    # v2 : Get the order with the min weight
+    best_order_index = -1
+    best_order_weight = 1000000
+    cur_order_weight = 0
+    for i in range(0, len(order_coords)):
+        if order_quantity[i] > 0:
+            cur_order_weight = order_weight(i)
+            if(cur_order_weight < best_order_weight):
+                best_order_index = i
+                best_order_weight = cur_order_weight
+    if best_order_index == -1:
         print("No more orders !!")
         game_over()
-    else:
-        return priority_orders[0]
+
+    return best_order_index
 
 
 def best_first_product(drone_index, order_index):
