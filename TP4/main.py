@@ -253,7 +253,7 @@ def solve():
     game_over()
 
 
-with open("busy_day.in") as f:
+with open(sys.argv[1]) as f:
     # with open(str(sys.argv[1])) as f:
     lines = f.readlines()
     # Format : First line : rows, columns, drones, turns, max payload

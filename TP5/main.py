@@ -41,20 +41,18 @@ def dijkstra(start):
     distances = [9999999] * (num_nodes + 1)
     distances[start] = 0
     queue = []
-    queue.append(start)
-    visited = []
-    visited.append(start)
+    for i in range(1, num_nodes + 1):
+        queue.append(i)
 
     min = 999999
     min_index = -1
     while(len(queue) != 0):
         current = queue.pop(dijkstra_min(queue, distances))
-        visited.append(current)
         for (next_edge, weight) in adj_list[current]:
-            queue.append(next_edge)
-            print(next_edge)
-            if(distances[next_edge] > distances[current] + weight):
-                distances[next_edge] = distances[current] + weight
+            if(next_edge in queue):
+                print(next_edge)
+                if(distances[next_edge] > distances[current] + weight):
+                    distances[next_edge] = distances[current] + weight
 
     print(distances)
 
