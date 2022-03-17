@@ -4,6 +4,8 @@ num_edges = 0
 num_players = 0
 num_teams = 0
 
+#création team 
+list_of_team = [[] for i in range(num_teams)]
 
 # Returns the distance of the direct edge between two nodes, else -1
 def weight(a, b):
@@ -56,6 +58,45 @@ def dijkstra(start):
 
     print(distances)
 
+# --------- Calculs des distances/communications ---------
+def calculate_distances_AtoP():
+    #Faire une liste :
+        #Caluler la distance entre l'Arbtre et chaque joueur
+    return 0
+
+def calculate_distances_PtoA():
+    #Faire une liste :
+        #Caluler la distance entre chaque joueur et l'Arbtre
+    return 0
+    
+def calculate_distances_P():
+    #Faire une liste :
+        #Sommer les distances entre le joueur et l'Arbtre
+    return 0
+
+def calculate_min_distances(list_of_team):
+    #Calculer l'équipe avec les communications minimales
+    return []
+# ------- Fin des Calculs des distances/communications -------
+
+# Algo pour les commmunications intra team
+def make_team(distances) : 
+    dist_arb = distances.sort(reverse=True)
+
+    #On les sépare en p équipes
+    for i in range(num_teams):
+        #On prend les premiers sommet ayant une distance max avec l'arbitre et on les met dans p différentes équipes
+        list_of_team[i].append(dist_arb.pop())
+    
+    #VERSION 1.0 On compare les comparaisons entre player et team_n
+        # On le met dans la team ayant avec player les communications minimales
+        # Si égalité, on le met dans la première team des égalités
+
+    #VERSION 2.0 On prend le joueur avec la plus petite communication avec l'arbitre
+         # Et on l'ajoute à la team_n ayant le plus petit nombre de communications actuel
+         # Et on actualise et on refait tant qu'il y a des joueurs sans teams
+    while(dist_arb.len() > 0):
+        dist_arb.append(calculate_min_distances())
 
 def solve():
     return 0
