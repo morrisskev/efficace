@@ -68,8 +68,8 @@ def  get_transpose_graph (adj_list) :
 
 def print_graph(adj_list): 
   for i  in range (1 , len(adj_list)) : 
-      for couple  in  adj_list[i] : 
-          print( i," => ", couple[0] ,  " weight of  => ",  couple[1] )
+      for (index ,weight ) in  adj_list[i] : 
+          print( i," => ", index ,  " weight of  => ",  weight )
                   
 # --------- Calculs des distances/communications --------- 
 #def calculate_distances_AtoP():
