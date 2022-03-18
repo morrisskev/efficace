@@ -1,3 +1,5 @@
+
+
 adj_list = []
 num_nodes = 0
 num_edges = 0
@@ -56,7 +58,14 @@ def dijkstra(start):
 
     print(distances)
 
-# --------- Calculs des distances/communications ---------
+def  get_transpose_graph (adj_list) :
+   transpose_adj_list = []  
+   for vertex in adj_list : 
+      transpose_adj_list .append([(couple[1], couple[0]) for couple in  vertex  ]) 
+  
+   return transpose_adj_list
+
+# --------- Calculs des distances/communications --------- 
 #def calculate_distances_AtoP():
 #    #Faire une liste :
 #        #Caluler la distance entre l'Arbtre et chaque joueur
@@ -122,3 +131,5 @@ def parse():
 if __name__ == "__main__":
     parse()
     print(dijkstra(1))
+    print(adj_list)
+    print(get_transpose_graph(adj_list))
