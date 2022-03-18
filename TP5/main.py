@@ -59,12 +59,18 @@ def dijkstra(start):
     print(distances)
 
 def  get_transpose_graph (adj_list) :
-   transpose_adj_list = []  
-   for vertex in adj_list : 
-      transpose_adj_list .append([(couple[1], couple[0]) for couple in  vertex  ]) 
-  
+   size_graph  =  len(adj_list) 
+   transpose_adj_list = [[] for _ in range(0, size_graph)]  
+   for  i  in range (1,size_graph) :
+       for (index , weight) in  adj_list[i] : 
+           transpose_adj_list[index].append((i,weight))
    return transpose_adj_list
 
+def print_graph(adj_list): 
+  for i  in range (1 , len(adj_list)) : 
+      for couple  in  adj_list[i] : 
+          print( i," => ", couple[0] ,  " weight of  => ",  couple[1] )
+                  
 # --------- Calculs des distances/communications --------- 
 #def calculate_distances_AtoP():
 #    #Faire une liste :
@@ -125,11 +131,17 @@ def parse():
         for i in range(1, num_edges + 1):
             cur_edge, next_edge, weight = (int(x) for x in lines[i].split())
             adj_list[cur_edge].append((next_edge, weight))
+        print(adj_list)
     f.close()
 
 
 if __name__ == "__main__":
     parse()
     print(dijkstra(1))
-    print(adj_list)
-    print(get_transpose_graph(adj_list))
+
+    print("\n ----------------- G ----------------------\n")
+    print_graph(adj_list)
+    print("\n ----------------- G'----------------------\n")
+    transpose_adj_list =get_transpose_graph (adj_list)  
+    print_graph(transpose_adj_list)
+    
