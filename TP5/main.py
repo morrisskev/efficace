@@ -26,7 +26,7 @@ def dijkstra_min(queue, distances):
     min = 99999
     min_index = -1
     for index, v in enumerate(queue):
-        print(distances[v])
+       # print(distances[v])
         if(distances[v] < min):
             min = distances[v]
             min_index = index
@@ -34,8 +34,9 @@ def dijkstra_min(queue, distances):
     return min_index
 
 
-def dijkstra(start):
-    global adj_list
+def dijkstra(start, graph):
+    #global adj_list
+    adj_list =  graph
     global num_nodes
     global num_edges
     global num_players
@@ -52,11 +53,11 @@ def dijkstra(start):
         current = queue.pop(dijkstra_min(queue, distances))
         for (next_edge, weight) in adj_list[current]:
             if(next_edge in queue):
-                print(next_edge)
+               # print(next_edge)
                 if(distances[next_edge] > distances[current] + weight):
                     distances[next_edge] = distances[current] + weight
 
-    print(distances)
+    return(distances)
 
 def  get_transpose_graph (adj_list) :
    size_graph  =  len(adj_list) 
@@ -70,7 +71,26 @@ def print_graph(adj_list):
   for i  in range (1 , len(adj_list)) : 
       for (index ,weight ) in  adj_list[i] : 
           print( i," => ", index ,  " weight of  => ",  weight )
-                  
+
+def get_arbitrator_index (adj_list) : 
+    max_arc = 0 
+    arbitrator_inex = 0 
+    for  i  in range (1, len(adj_list)): 
+       vertex = adj_list[i]
+       if (len(vertex)> max_arc) : 
+           max_arc = len(vertex)
+           arbitrator_inex = i 
+    return arbitrator_inex       
+
+#return (distance between arbitrator to  plyers as list and players to aerbitrator as list )
+def get_distance_arb__players(adj_list): 
+    arb_index = get_arbitrator_index (adj_list)
+    distance_arb_players = dijkstra(arb_index, adj_list)
+    tras_adj_list = get_transpose_graph(adj_list)
+    distance_player_arb = dijkstra(arb_index, tras_adj_list)
+    return (distance_arb_players,distance_player_arb )
+
+
 # --------- Calculs des distances/communications --------- 
 #def calculate_distances_AtoP():
 #    #Faire une liste :
@@ -137,11 +157,14 @@ def parse():
 
 if __name__ == "__main__":
     parse()
-    print(dijkstra(1))
-
-    print("\n ----------------- G ----------------------\n")
-    print_graph(adj_list)
+   # print(dijkstra(1,  adj_list))
+    #print("\n ----------------- G ----------------------\n")
+    #print(adj_list)
+    """print_graph(adj_list)
     print("\n ----------------- G'----------------------\n")
+    print(adj_list)
     transpose_adj_list =get_transpose_graph (adj_list)  
     print_graph(transpose_adj_list)
-    
+    """
+   #print(get_transpose_graph(adj_list))
+    print(get_distance_arb__players(adj_list))
