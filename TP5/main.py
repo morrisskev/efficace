@@ -72,19 +72,10 @@ def print_graph(adj_list):
       for (index ,weight ) in  adj_list[i] : 
           print( i," => ", index ,  " weight of  => ",  weight )
 
-def get_arbitrator_index (adj_list) : 
-    max_arc = 0 
-    arbitrator_inex = 0 
-    for  i  in range (1, len(adj_list)): 
-       vertex = adj_list[i]
-       if (len(vertex)> max_arc) : 
-           max_arc = len(vertex)
-           arbitrator_inex = i 
-    return arbitrator_inex       
+     
 
 #return (distance between arbitrator to  plyers as list and players to aerbitrator as list )
-def get_distance_arb__players(adj_list): 
-    arb_index = get_arbitrator_index (adj_list)
+def get_distance_arb__players(adj_list,arb_index): 
     distance_arb_players = dijkstra(arb_index, adj_list)
     tras_adj_list = get_transpose_graph(adj_list)
     distance_player_arb = dijkstra(arb_index, tras_adj_list)
@@ -132,6 +123,20 @@ def get_distance_arb__players(adj_list):
 #        dist_arb.append(calculate_min_distances())
 # ------- Fin Algo pour les commmunications intra team -------
 
+"""
+def make_Team(adj_list) : 
+     distance= get_distance_arb__players(adj_list) 
+     distance_arb_to_players = distance[0]
+     distance_players_to_arb = distance[1]
+     for i in range (len(distance_arb_to_players)) : 
+         vertex = i 
+         distance_arb_to_players[vertex] = (distance_arb_to_players[i],vertex)  
+     distance_arb_to_players.sort(reverse=True)
+     print("ok",distance_arb_to_players)
+"""
+    
+    # print(distance_players_to_arb)
+
 
 def solve():
     return 0
@@ -166,5 +171,6 @@ if __name__ == "__main__":
     transpose_adj_list =get_transpose_graph (adj_list)  
     print_graph(transpose_adj_list)
     """
-   #print(get_transpose_graph(adj_list))
-    print(get_distance_arb__players(adj_list))
+    #print(get_transpose_graph(adj_list))
+    print(get_distance_arb__players(adj_list, (num_players+1)))
+    #make_Team(adj_list)
