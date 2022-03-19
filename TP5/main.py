@@ -94,23 +94,27 @@ def getFirstTeams(sumOfArbPlayrs):
     #Ici on cherchera à former les équipes en plaçant les deux premiers joueurs
     maxTeam = [] #On mettra ici le premier joueur qui a la communication maximale
     maxTeam2 = [] # On met ici le deuxième joueur a la communication maximale
-    tab=[]# On se servira de cette liste  pour choisir le deuxième maximum après suppression du premier
     max = -9999999
     max2= -9999999
+    playerMax1= 0 #Le joueur qui aura le premier maximum
+    playerMax2 = 0 # idem pour le second
     for i in range (1,len(sumOfArbPlayrs)-1):
-        if(max < sumOfArbPlayrs[i]):
+        if(max <= sumOfArbPlayrs[i]):
             max=sumOfArbPlayrs[i]
-
+            playerMax1=i
     for i in range(1,len(sumOfArbPlayrs)-1):
-        if(sumOfArbPlayrs[i]!=max):
-            tab.append(sumOfArbPlayrs[i])
-    for i in range(0,len(tab)):
-        if(max2 < tab[i]):
-            max2=tab[i]
-    maxTeam.append(max)
-    maxTeam2.append(max2)
+        if(max2 < sumOfArbPlayrs[i]):
+            if(i!=playerMax1):
+                max2=sumOfArbPlayrs[i]
+                playerMax2=i
+    print("pos1 : "+str(playerMax1))
+    print("pos2 : "+str(playerMax2))
+    maxTeam.append((playerMax1,max))
+    maxTeam2.append((playerMax2,max2))
     print(maxTeam2)
     return (maxTeam,maxTeam2)
+
+
 # --------- Calculs des distances/communications ---------
 #def calculate_distances_AtoP():
 #    #Faire une liste :
