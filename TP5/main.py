@@ -107,13 +107,51 @@ def getFirstTeams(sumOfArbPlayrs):
             if(i!=playerMax1):
                 max2=sumOfArbPlayrs[i]
                 playerMax2=i
-    print("pos1 : "+str(playerMax1))
-    print("pos2 : "+str(playerMax2))
     maxTeam.append((playerMax1,max))
     maxTeam2.append((playerMax2,max2))
     print(maxTeam2)
     return (maxTeam,maxTeam2)
 
+def triDistance_P():
+    #Trie les sommes entre les distance de l'arbitre et chaque joueur dans l'ordre décroissant. On associera à chaque position un couple(numérojoueur,sommecommunication)
+    distances_P()
+    j = 0
+    listWithNumPlayers=[] # On copiera dans cette liste les sommes des arbitres avec chaque joueur en ajoutant pour chaque somme le numéro du joueur
+    for i in range(0,len(sumOfArbPlayrs)):
+        if i > 0 and i < len(sumOfArbPlayrs)-1:
+            listWithNumPlayers.append((i,sumOfArbPlayrs[i]))
+
+    while j < len(listWithNumPlayers)-1:#On trie la liste dans l'ordre décroissant
+        (x1,y1)=listWithNumPlayers[j]
+        (x2,y2)=listWithNumPlayers[j+1]
+        if y1 < y2 :
+            listWithNumPlayers[j]=(x2,y2)
+            listWithNumPlayers[j+1]=(x1,y1)
+            j=0
+        else:
+            j+=1
+    return listWithNumPlayers
+def getResult():
+    #On trouve le résultat final
+    (team1,team2)=getFirstTeams(sumOfArbPlayrs)#On place dans team1 le joueur avec la communication la plus forte et dans team2 le deuxième joueur avec la communication la plus forte
+    (chefEq1,tmp1)=team1[0]
+    (chefEq2,tmp2)=team2[0]
+    e1=0
+    e2=0
+    listTriee=triDistance_P()
+    (distance_arb_players,distance_players_to_arb)=get_distance_arb__players(adj_list,(num_players+1))
+    for (x,y) in listTriee:
+        if(x not in team1 and x not in team2):
+            #On place le joueur dans l'équipe où il y a une plus faible communication avec ce joueur puis on met ) jour les communications des équipes E1 et E2 et leur tmp
+            if(e1+distance_arb_players[x]+distance_players_to_arb[x] < e2+distance_arb_players[x]+distance_players_to_arb[x]):
+                team1.append((x,y))
+                e1+=distance_arb_players[x]+distance_players_to_arb[x]
+                tmp1+=x
+            else:
+                team2.append((x,y))
+                e2+=distance_arb_players[x]+distance_players_to_arb[x]
+                tmp2+=x
+    return e1+e2
 
 # --------- Calculs des distances/communications ---------
 #def calculate_distances_AtoP():
@@ -181,7 +219,7 @@ def parse():
     global num_edges
     global num_players
     global num_teams
-    with open("fichier.txt") as f:
+    with open("fichier2.txt") as f:
         lines = f.read().splitlines()
         num_nodes, num_players, num_teams, num_edges = [
             int(x) for x in lines[0].split()]
@@ -205,7 +243,9 @@ if __name__ == "__main__":
     print_graph(transpose_adj_list)
     """
     #print(get_transpose_graph(adj_list))
-    print(get_distance_arb__players(adj_list, (num_players+1)))
-    distances_P()
-    print(getFirstTeams(sumOfArbPlayrs))
+    #print(get_distance_arb__players(adj_list, (num_players+1)))
+    #distances_P()
+    #print(getFirstTeams(sumOfArbPlayrs))
+    #print(triDistance_P())
+    print(getResult())
     #make_Team(adj_list)
