@@ -23,8 +23,7 @@ def compute_seq():
     for n in seq:
         notes_played[n-1] += 1
 
-
-def note_possible(i):
+def parse(path):
     global nb_notes
     global seq_len
     global freq
@@ -33,71 +32,7 @@ def note_possible(i):
     global eq_multiplier
     global total_notes_played
     global notes_played
-    if (notes_played[i] + 1) * eq_multiplier < (total_notes_played + 1) * eq_multiplier * freq_raw[i] + eq_multiplier:
-        for j in range(0, nb_notes):
-            if j == i:
-                continue
-            if (total_notes_played + 1) * eq_multiplier * freq_raw[i] + eq_multiplier < notes_played[i] * eq_multiplier:
-                return False
-        return True
-    return False
-
-
-def notes_possible():
-    global nb_notes
-    global seq_len
-    global freq
-    global freq_raw
-    global seq
-    global eq_multiplier
-    global total_notes_played
-    global notes_played
-    res = []
-    for i in range(0, nb_notes):
-        if (note_possible(i)):
-            res.append(i)
-    return res
-
-
-def best_note():
-    global nb_notes
-    global seq_len
-    global freq
-    global freq_raw
-    global seq
-    global eq_multiplier
-    global total_notes_played
-    global notes_played
-    max = -1
-    max_index = -1
-    for i in range(0, nb_notes):
-        if (notes_played[i] + 1) * eq_multiplier < (total_notes_played + 1) * eq_multiplier * freq_raw[i] + eq_multiplier:
-            for j in range(0, nb_notes):
-                if j == i:
-                    continue
-
-                cur = notes_played[j] * eq_multiplier - (
-                    (total_notes_played + 1) * eq_multiplier * freq_raw[j] - eq_multiplier)
-                print("cur: " + str(cur))
-                if cur < 0:
-                    print("cur < 0")
-                    break
-                if cur > max:
-                    max = cur
-                    max_index = j
-    return max_index
-
-
-def parse():
-    global nb_notes
-    global seq_len
-    global freq
-    global freq_raw
-    global seq
-    global eq_multiplier
-    global total_notes_played
-    global notes_played
-    with open("ex1.in", "r") as f:
+    with open(path, "r") as f:
         data = f.read()
         data = data.split("\n")
         nb_notes, seq_len = [int(x) for x in data[0].split(" ")]
@@ -121,6 +56,24 @@ def parse():
         print("notes played: " + str(notes_played))
         f.close()
 
+def testonleft(notes_played,total_notes_played,freq,nb_notes,i):
+    for j in range (0,nb_notes):
+        if not j==i and (not (total_notes_played+1)*freq[j]-1<notes_played[j] ):
+                return False
+    return True
+
+
+def bestNote(notes_played,total_notes_played,freq,nb_notes):
+    min=10000
+    indice=-1
+    for i in range (0,nb_notes):
+        r=notes_played[i]-(total_notes_played*freq[i]-1)
+        if r>0 and min>r:
+            if (notes_played[i]+1<(total_notes_played+1)*freq[i]+1) and testonleft(notes_played,total_notes_played,freq,nb_notes,i):
+                min=r
+                indice=i
+    return indice
+
 
 def solve():
     global nb_notes
@@ -132,22 +85,31 @@ def solve():
     global total_notes_played
     global notes_played
 
-    notes = notes_possible()
-    print("notes_possible: " + str(notes))
-    return
+    compt=0
+    sequence_add=[]
+    while(compt<100):   
+        indice=bestNote(notes_played,total_notes_played,freq,nb_notes)
+        if(indice==-1):
+            break
+        else:
+            notes_played[indice]+=1
+            total_notes_played+=1
+            compt=compt+1
+            sequence_add.append(indice+1)
 
-    best_note_index = best_note()
-    while(best_note_index != -1):
-        best_note_readable = (best_note_index + 1)
-        print("Best note is : " + str(best_note_readable))
-        notes_played[best_note_index] += 1
-        total_notes_played += 1
-        seq.append(best_note_readable)
-        best_note_index = best_note()
+    if (compt>=100):
+        print("sequence total: " +str(seq+sequence_add))
+        print("resultat="+str(compt))
+        print("infini")
+    else :
+        print("sequence total: " +str(seq+sequence_add))
+        print("resultat="+str(compt))
+
 
 
 def main():
-    parse()
+    path=sys.argv[1]
+    parse(path)
     solve()
 
 
