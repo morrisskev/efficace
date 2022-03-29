@@ -28,16 +28,14 @@ def solve():
     }
     for key in number_times:
         if number_times[key] == max_times:
-            equal_values[key] = number_times[key]
+            if key < max_times_index:
+                max_times = number_times[key]
+                max_times_index = key
         elif number_times[key] > max_times:
-            equal_values = {}
             max_times = number_times[key]
             max_times_index = key
 
-    if len(equal_values) == 0:
-        return max_times_index
-    else:
-        return min(equal_values.keys())
+    return max_times_index
 
 
 def parse():
