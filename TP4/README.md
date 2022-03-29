@@ -1,3 +1,14 @@
+## Google HashCode 2016 - Qualification Round (Drone problem)
+
+An Algorithm in Python
+
+## How to use
+
+Run these two commands :
+
+    python3 main.py <input_file>
+    java -jar TestSolHas16.jar <input_file> <output_file>
+
 ## Benchmark Results
 
 example.in:

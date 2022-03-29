@@ -40,7 +40,7 @@ def solve():
 
 def parse():
     global nb_in, nb_out, times_in, times_out
-    file_name = "data-tp8/Cuisson/" + sys.argv[1]
+    file_name = sys.argv[1]
     with open(file_name, "r") as f:
         data = f.readlines()
         nb_in = int(data[0])
