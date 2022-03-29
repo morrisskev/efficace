@@ -21,4 +21,4 @@ def solu():
 
     longueur_totale = aire/largeur_totale
 
-    print(str(longueur_totale))
+    print(int(longueur_totale))
