@@ -4,7 +4,9 @@ nb_in = 0
 nb_out = 0
 times_in = []
 times_out = []
-number_times = [0] * 1000
+number_times = {
+
+}
 
 
 def solve():
@@ -13,14 +15,25 @@ def solve():
         for j in range(0, nb_out):
             diff = times_out[j] - times_in[i]
             if diff > 0:
-                number_times[diff] += 1
+                if diff in number_times:
+                    number_times[diff] += 1
+                else:
+                    number_times[diff] = 1
 
-    return number_times.index(max(number_times))
+    # print(number_times)
+    max_times = 0
+    max_times_index = 0
+    for key in number_times:
+        if number_times[key] > max_times:
+            max_times = number_times[key]
+            max_times_index = key
+    return max_times_index
 
 
 def parse():
     global nb_in, nb_out, times_in, times_out
-    with open(sys.argv[1], "r") as f:
+    file_name = "data-tp8/Cuisson/" + sys.argv[1]
+    with open(file_name, "r") as f:
         data = f.readlines()
         nb_in = int(data[0])
         nb_out = int(data[1])
