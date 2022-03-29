@@ -8,6 +8,7 @@ seq = []
 eq_multiplier = 0
 total_notes_played = 0
 notes_played = []
+file_name = ""
 
 # Inequality =
 # NbNotes * raw freq * eq_multiplier - eq_multiplier <
@@ -79,6 +80,7 @@ def solve():
     global eq_multiplier
     global total_notes_played
     global notes_played
+    global file_name
 
     compt = 0
     sequence_add = []
@@ -97,6 +99,11 @@ def solve():
         print("infini")
     else:
         print("resultat="+str(compt))
+    file_name = file_name.replace(".in", ".out")
+    print("file_name="+file_name)
+    with open(file_name, "w") as f:
+        f.write(str(compt)+"\n")
+        f.write(" ".join(str(x) for x in sequence_add))
 
 
 def main():
@@ -108,10 +115,12 @@ def main():
     global eq_multiplier
     global total_notes_played
     global notes_played
+    global file_name
     for i in range(3, 84):
         path = "0" + str(i) + ".in" if i < 10 else str(i) + ".in"
         print("TESTING FILE " + path)
         print("------------------")
+        file_name = path
         parse(path)
         solve()
         nb_notes = 0
@@ -122,6 +131,7 @@ def main():
         eq_multiplier = 0
         total_notes_played = 0
         notes_played = []
+        file_name = ""
         print("------------------\n")
 
 
