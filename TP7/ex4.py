@@ -23,11 +23,21 @@ def solve():
     # print(number_times)
     max_times = 0
     max_times_index = 0
+    equal_values = {
+
+    }
     for key in number_times:
-        if number_times[key] > max_times:
+        if number_times[key] == max_times:
+            equal_values[key] = number_times[key]
+        elif number_times[key] > max_times:
+            equal_values = {}
             max_times = number_times[key]
             max_times_index = key
-    return max_times_index
+
+    if len(equal_values) == 0:
+        return max_times_index
+    else:
+        return min(equal_values.keys())
 
 
 def parse():
