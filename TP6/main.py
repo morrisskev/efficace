@@ -68,7 +68,7 @@ def bestNote(notes_played, total_notes_played, freq, nb_notes):
             if (notes_played[i]+1 < (total_notes_played+1)*freq[i]+1) and testonleft(notes_played, total_notes_played, freq, nb_notes, i):
                 min = r
                 indice = i
-    return indice
+    return (indice, min)
 
 
 def solve():
@@ -83,19 +83,25 @@ def solve():
     global file_name
 
     compt = 0
+    last_min = -99999
     sequence_add = []
-    while(compt < 100):
-        indice = bestNote(notes_played, total_notes_played, freq, nb_notes)
-        if(indice == -1):
+    while(True):
+        (indice, min) = bestNote(notes_played, total_notes_played, freq, nb_notes)
+        # Infinite loop
+        if last_min >= min:
+            compt = -1
             break
         else:
-            notes_played[indice] += 1
-            total_notes_played += 1
-            compt = compt+1
-            sequence_add.append(indice+1)
+            last_min = min
+            if(indice == -1):
+                break
+            else:
+                notes_played[indice] += 1
+                total_notes_played += 1
+                compt = compt+1
+                sequence_add.append(indice+1)
 
-    if (compt >= 100):
-        print("resultat="+str(compt))
+    if (compt == -1):
         print("infini")
     else:
         print("resultat="+str(compt))
