@@ -30,7 +30,6 @@ def brute():
                 if cur_height == 0:
                     used_dominoes.append(0)
                     map[cur_height][i] = 0
-                    break
                 else:
                     for j in range(0, nb_dominoes):
                         if j not in used_dominoes and dominoes[j][3] == dominoes[map[cur_height][i]][1]:
