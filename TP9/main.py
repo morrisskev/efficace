@@ -34,6 +34,7 @@ def brute():
                 else:
                     for j in range(0, nb_dominoes):
                         if j not in used_dominoes and dominoes[j][3] == dominoes[map[cur_height][i]][1]:
+                            print("Added domino 2 : " + str(j))
                             used_dominoes.append(j)
                             map[cur_height][i] = j
                             break
@@ -41,15 +42,18 @@ def brute():
                 if cur_height == 0:
                     for j in range(0, nb_dominoes):
                         if j not in used_dominoes and dominoes[j][4] == dominoes[map[cur_height][i-1]][2]:
+                            print("Added domino 3 : " + str(j))
                             used_dominoes.append(j)
                             map[cur_height][i] = j
                             break
                 else:
                     for j in range(0, nb_dominoes):
                         if j not in used_dominoes and dominoes[j][3] == dominoes[map[cur_height-1][i]][1] and dominoes[j][4] == dominoes[map[cur_height][i-1]][2]:
+                            print("Added domino 4 : " + str(j))
                             used_dominoes.append(j)
                             map[cur_height][i] = j
                             break
+        map.append([-1] * max_line_length)
         cur_height += 1
     return
 
